@@ -2,6 +2,8 @@
 
 テキストから背景色透明のSVG画像を生成するWebWebアプリです。
 
+![desktop](public/screenshots/desktop.png)
+
 ## 機能
 
 - ✅ 任意のテキストを入力
