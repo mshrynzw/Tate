@@ -75,4 +75,18 @@ tategen/
 
 ## ライセンス
 
-MIT
+このプロジェクトは [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html) の下で公開されています。
+
+詳細は [LICENSE](https://github.com/mshrynzw/aurawork/blob/master/LICENSE) ファイルを参照してください。
+
+## 作者
+
+- **mshrynzw** - [GitHub](https://github.com/mshrynzw)
+
+## 貢献
+
+貢献を歓迎します！プルリクエストを送信する前に、コーディング規約を確認してください。
+
+## セキュリティ
+
+セキュリティの脆弱性を発見した場合は、GitHubのセキュリティアドバイザリを通じて報告してください。
