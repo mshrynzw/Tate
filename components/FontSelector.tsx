@@ -25,9 +25,8 @@ export function FontSelector({ fonts, value, onValueChange }: FontSelectorProps)
       options={options}
       value={value}
       onValueChange={onValueChange}
-      placeholder="フォントを選択"
-      emptyText="フォントが見つかりません"
+      placeholder='フォントを選択'
+      emptyText='フォントが見つかりません'
     />
   );
 }
-

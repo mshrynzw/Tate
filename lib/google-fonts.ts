@@ -16,12 +16,12 @@ export async function fetchGoogleFonts(): Promise<GoogleFont[]> {
     const url = GOOGLE_FONTS_API_KEY
       ? `${GOOGLE_FONTS_API_URL}?key=${GOOGLE_FONTS_API_KEY}`
       : GOOGLE_FONTS_API_URL;
-    
+
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error('フォントの取得に失敗しました');
     }
-    
+
     const data = await response.json();
     return data.items || [];
   } catch (error) {
@@ -41,9 +41,7 @@ export function loadGoogleFont(fontFamily: string): void {
   if (typeof window === 'undefined') return;
 
   // 既に読み込まれているかチェック
-  const existingLink = document.querySelector(
-    `link[href*="${fontFamily.replace(/\s+/g, '+')}"]`
-  );
+  const existingLink = document.querySelector(`link[href*="${fontFamily.replace(/\s+/g, '+')}"]`);
   if (existingLink) return;
 
   // Google Fontsのリンクを動的に追加
@@ -52,4 +50,3 @@ export function loadGoogleFont(fontFamily: string): void {
   link.rel = 'stylesheet';
   document.head.appendChild(link);
 }
-

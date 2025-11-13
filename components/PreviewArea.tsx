@@ -13,15 +13,24 @@ export const PreviewArea = forwardRef<HTMLDivElement, PreviewAreaProps>(
   ({ text, fontSize, color, fontFamily }, ref) => {
     const displayText = text || 'プレビュー';
     const characters = Array.from(displayText);
-    
+
     // 文字の種類を判定する関数
-    const getCharType = (char: string): 'normal' | 'punctuation' | 'small' | 'symbol' | 'symbol_under' => {
+    const getCharType = (
+      char: string
+    ): 'normal' | 'punctuation' | 'small' | 'symbol' | 'symbol_under' => {
       // 句読点（右上に配置）
-      if (char === '、' || char === '。' || char === '，' || char === '．' || 
-          char === '・' || char === '：' || char === '；') {
+      if (
+        char === '、' ||
+        char === '。' ||
+        char === '，' ||
+        char === '．' ||
+        char === '・' ||
+        char === '：' ||
+        char === '；'
+      ) {
         return 'punctuation';
       }
-      
+
       // 小文字（右下に配置）
       // ひらがなの小文字: ぁ-ぉ、ゃ-ょ、っ
       if (/^[ぁぃぅぇぉゃゅょっ]$/.test(char)) {
@@ -39,15 +48,15 @@ export const PreviewArea = forwardRef<HTMLDivElement, PreviewAreaProps>(
       if (/^[」』＞〉≫》）］｝]$/.test(char)) {
         return 'symbol_under';
       }
-      
+
       return 'normal';
     };
-    
+
     // 通常の文字と記号をカウント（句読点と小文字は行を取らない）
     const lineHeight = fontSize * 1.2;
     const svgWidth = 400;
     const centerX = svgWidth / 2;
-    
+
     // まず、実際に必要な高さを計算
     let totalHeight = 0;
     characters.forEach((char) => {
@@ -59,29 +68,34 @@ export const PreviewArea = forwardRef<HTMLDivElement, PreviewAreaProps>(
       }
       // 句読点と小文字は行を取らないので高さに加算しない
     });
-    
+
     // 最小高さを確保し、実際の高さを使用
     const svgHeight = Math.max(400, totalHeight + fontSize);
-    
+
     // 文字とその位置を計算
     let currentY = (svgHeight - totalHeight) / 2;
-    const textElements: Array<{ char: string; x: number; y: number; type: 'normal' | 'punctuation' | 'small' | 'symbol' | 'symbol_under' }> = [];
-    
+    const textElements: Array<{
+      char: string;
+      x: number;
+      y: number;
+      type: 'normal' | 'punctuation' | 'small' | 'symbol' | 'symbol_under';
+    }> = [];
+
     characters.forEach((char) => {
       const charType = getCharType(char);
-      
+
       if (charType === 'punctuation') {
         // 句読点は前の文字の右上に配置
         if (textElements.length > 0) {
           // 前の通常文字を探す
           let baseElement = textElements[textElements.length - 1];
           let searchIndex = textElements.length - 1;
-          
+
           while (baseElement && baseElement.type !== 'normal' && searchIndex > 0) {
             searchIndex--;
             baseElement = textElements[searchIndex];
           }
-          
+
           if (baseElement && baseElement.type === 'normal') {
             // 前の文字の右上に配置
             // 前の文字の中心から、右に文字サイズの約50%（文字の右端）、上に文字サイズの約50%（文字の上端）移動
@@ -116,12 +130,12 @@ export const PreviewArea = forwardRef<HTMLDivElement, PreviewAreaProps>(
           // 前の通常文字を探す
           let baseElement = textElements[textElements.length - 1];
           let searchIndex = textElements.length - 1;
-          
+
           while (baseElement && baseElement.type !== 'normal' && searchIndex > 0) {
             searchIndex--;
             baseElement = textElements[searchIndex];
           }
-          
+
           if (baseElement && baseElement.type === 'normal') {
             // 前の文字の右下に配置
             // 前の文字の中心から、右に文字サイズの約25%、下に文字サイズの約25%移動
@@ -183,18 +197,19 @@ export const PreviewArea = forwardRef<HTMLDivElement, PreviewAreaProps>(
     return (
       <div
         ref={ref}
-        className="w-full min-h-[400px] flex items-center justify-center bg-white border-2 border-dashed border-gray-300 rounded-lg p-8"
+        className='w-full min-h-[400px] flex items-center justify-center bg-white border-2 border-dashed border-gray-300 rounded-lg p-8'
       >
         <svg
-          width="100%"
-          height="100%"
+          width='100%'
+          height='100%'
           viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-          xmlns="http://www.w3.org/2000/svg"
+          xmlns='http://www.w3.org/2000/svg'
           style={{ fontFamily: fontFamily || 'sans-serif' }}
         >
           <defs>
             <style>
-              {fontFamily && `@import url('https://fonts.googleapis.com/css2?family=${fontFamily.replace(/\s+/g, '+')}:wght@400&display=swap');`}
+              {fontFamily &&
+                `@import url('https://fonts.googleapis.com/css2?family=${fontFamily.replace(/\s+/g, '+')}:wght@400&display=swap');`}
             </style>
           </defs>
           <g>
@@ -205,9 +220,15 @@ export const PreviewArea = forwardRef<HTMLDivElement, PreviewAreaProps>(
                 y={element.y}
                 fontSize={element.type === 'punctuation' ? fontSize * 0.8 : fontSize}
                 fill={color}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                transform={element.type === 'symbol' ? `rotate(90, ${element.x}, ${element.y})` : element.type === 'symbol_under' ? `rotate(90, ${element.x}, ${element.y})` : undefined}
+                textAnchor='middle'
+                dominantBaseline='middle'
+                transform={
+                  element.type === 'symbol'
+                    ? `rotate(90, ${element.x}, ${element.y})`
+                    : element.type === 'symbol_under'
+                      ? `rotate(90, ${element.x}, ${element.y})`
+                      : undefined
+                }
                 style={{ fontFamily: fontFamily || 'sans-serif' }}
               >
                 {element.char}
@@ -221,4 +242,3 @@ export const PreviewArea = forwardRef<HTMLDivElement, PreviewAreaProps>(
 );
 
 PreviewArea.displayName = 'PreviewArea';
-
