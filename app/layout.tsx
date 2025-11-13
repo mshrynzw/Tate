@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Tate',
     description: '文字列を縦に表示するSVGを生成するWebアプリ',
-    url: 'https://tategen.netlify.app',
+    url: 'https://tate-gilt.vercel.app',
     images: [
       {
-        url: 'https://tategen.netlify.app/favicon.ico',
+        url: 'https://tate-gilt.vercel.app/favicon.ico',
         width: 180,
         height: 180,
         alt: 'Tate',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Tate',
     description: '文字列を縦に表示するSVGを生成するWebアプリ',
-    images: ['https://tategen.netlify.app/favicon.ico'],
+    images: ['https://tate-gilt.vercel.app/favicon.ico'],
   },
 };
 
